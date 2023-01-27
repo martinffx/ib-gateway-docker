@@ -7,8 +7,8 @@ This builds a Docker image with the latest version of [Interactive Brokers](http
 ## Building
 
 ```sh
-# On arm64 Macs you need to specify amd64
-podman build -t ib-gateway-docker --arch amd64 .
+make build
+make deploy
 ```
 
 ## Running
