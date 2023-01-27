@@ -7,13 +7,14 @@ This builds a Docker image with the latest version of [Interactive Brokers](http
 ## Building
 
 ```sh
-docker build . -t ib-gateway-docker
+# On arm64 Macs you need to specify amd64
+podman build -t ib-gateway-docker --arch amd64 .
 ```
 
 ## Running
 
 ```sh
-docker run -p 4002:4002 -p 5900:5900 \
+podman run -p 4002:4002 -p 5900:5900 \
     --env TWSUSERID=YOUR_USER_ID \
     --env TWSPASSWORD=YOUR_PASSWORD \
     ib-gateway-docker:latest
