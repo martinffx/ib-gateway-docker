@@ -1,11 +1,11 @@
-build:
-	podman build -t martinffx/ib-gateway-docker --arch amd64 .
+vnc: start
+	open vnc://localhost:5900
 
-run:
-	podman run -p 4002:4002 -p 5900:5900 \
-	    --env TWSUSERID=$TWSUSERID \
-	    --env TWSPASSWORD=$TWSPASSWORD \
-	    martinffx/ib-gateway-docker:latest
+build:
+	docker-compose build ib-gateway
+
+start:
+	docker-compose up -d ib-gateway
 
 deploy:
-	podman push martinffx/ib-gateway-docker
+	docker push martinffx/ib-gateway-docker
