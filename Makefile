@@ -4,8 +4,11 @@ vnc: start
 build:
 	docker-compose build ib-gateway
 
-start:
+up:
 	docker-compose up -d ib-gateway
+
+down:
+	docker-compose down
 
 deploy:
 	docker push martinffx/ib-gateway-docker
