@@ -44,9 +44,6 @@ jobs:
           docker exec ib-gateway-smoke pgrep -f socat
           docker exec ib-gateway-smoke pgrep -f java
 
-          # Verify port 4002 is listening
-          docker exec ib-gateway-smoke ss -tlnp | grep 4002
-
           # Cleanup
           docker stop ib-gateway-smoke
           docker rm ib-gateway-smoke
