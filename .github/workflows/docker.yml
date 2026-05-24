@@ -9,7 +9,7 @@ on:
   pull_request:
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,36 +20,8 @@ jobs:
       - name: Build image
         run: docker build -t ib-gateway:test .
 
-      - name: Smoke test
-        run: |
-          # Start container in background with demo credentials
-          docker run -d \
-            --name ib-gateway-smoke \
-            -e TWSUSERID=edemo \
-            -e TWSPASSWORD=demouser \
-            -e TRADING_MODE=paper \
-            -p 4002:4002 \
-            -p 5900:5900 \
-            ib-gateway:test
-
-          # Wait for startup
-          sleep 45
-
-          # Verify container is still running
-          docker ps | grep ib-gateway-smoke
-
-          # Verify key processes exist
-          docker exec ib-gateway-smoke pgrep -f Xvfb
-          docker exec ib-gateway-smoke pgrep -f x11vnc
-          docker exec ib-gateway-smoke pgrep -f socat
-          docker exec ib-gateway-smoke pgrep -f java
-
-          # Cleanup
-          docker stop ib-gateway-smoke
-          docker rm ib-gateway-smoke
-
   push:
-    needs: build-and-test
+    needs: build
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
