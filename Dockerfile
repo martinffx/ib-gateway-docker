@@ -16,7 +16,7 @@ RUN wget -q --progress=bar:force:noscroll --show-progress \
     && chmod a+x install-ibgateway.sh
 
 RUN wget -q --progress=bar:force:noscroll --show-progress \
-    https://github.com/IbcAlpha/IBC/releases/download/3.20.0/IBCLinux-3.20.0.zip \
+    https://github.com/IbcAlpha/IBC/releases/download/3.23.0/IBCLinux-3.23.0.zip \
     -O ibc.zip \
     && unzip ibc.zip -d /opt/ibc \
     && chmod a+x /opt/ibc/*.sh /opt/ibc/*/*.sh
@@ -25,7 +25,7 @@ COPY run.sh run.sh
 RUN dos2unix run.sh
 
 # Application
-FROM ubuntu:24.04 as app
+FROM ubuntu:24.04 AS app
 
 RUN apt update \
     && apt install -y \
