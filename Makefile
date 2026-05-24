@@ -10,6 +10,9 @@ up:
 down:
 	docker-compose down
 
+logs:
+	docker-compose logs -f ib-gateway
+
 shell:
 	docker-compose run -it ib-gateway /bin/bash
 
