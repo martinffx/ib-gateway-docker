@@ -1,10 +1,13 @@
-VERSION := v$(shell grep -o 'Jts/[0-9]*' Dockerfile | cut -d'/' -f2)-ibc$(shell grep -o 'IBCLinux-[0-9.]*' Dockerfile | sed 's/IBCLinux-//' | sed 's/\.$$//')
+TWS_VERSION = $(shell cat .tws-version 2>/dev/null)
+IBC_VERSION = $(shell grep -o 'IBCLinux-[0-9.]*' Dockerfile | sed 's/IBCLinux-//' | sed 's/\.$$//')
+VERSION = v$(TWS_VERSION)-ibc$(IBC_VERSION)
 
 vnc: up
 	open vnc://localhost:5900
 
 build:
 	docker-compose build ib-gateway
+	@docker run --rm martinffx/ib-gateway-docker cat /home/docker/.tws-version > .tws-version
 
 up:
 	docker-compose up -d ib-gateway
