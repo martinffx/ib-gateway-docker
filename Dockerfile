@@ -39,7 +39,8 @@ WORKDIR /home/docker
 
 USER docker
 COPY --from=builder /root/install-ibgateway.sh install-ibgateway.sh
-RUN printf "/home/docker/Jts/1030\nn" | ./install-ibgateway.sh
+RUN printf "/home/docker/Jts/tws\nn" | ./install-ibgateway.sh \
+    && ls /home/docker/Jts/tws/jars/twslaunch-*.jar | grep -oE '[0-9]+' | head -1 > /home/docker/.tws-version
 
 RUN mkdir .vnc \
     && x11vnc -storepasswd password .vnc/passwd
@@ -48,10 +49,10 @@ COPY --from=builder /opt/ibc /opt/ibc
 COPY --from=builder /root/run.sh run.sh
 COPY ibc_config.ini ibc/config.ini
 
-ENV DISPLAY :0
-ENV TRADING_MODE paper
-ENV TWS_PORT 4002
-ENV VNC_PORT 5900
+ENV DISPLAY=:0
+ENV TRADING_MODE=paper
+ENV TWS_PORT=4002
+ENV VNC_PORT=5900
 
 EXPOSE $TWS_PORT
 EXPOSE $VNC_PORT
